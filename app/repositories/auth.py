@@ -4,6 +4,9 @@ from sqlalchemy.orm import Session
 from .. import schemas
 from ..models import User, Code
 from ..security import get_password_hash, verify_password, create_jwt_token
+from datetime import datetime, timedelta
+
+from ..utils import verify_email
 
 def register(request: schemas.RegistrationRequest, db: Session) -> schemas.BaseResponse:
     if db.query(User).filter(User.email == request.email).first():
@@ -12,6 +15,9 @@ def register(request: schemas.RegistrationRequest, db: Session) -> schemas.BaseR
     if request.password != request.confirm_password:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Passwords do not match")
     
+    if not verify_email(request.email):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="We cannot accept this email address")
+
     user = User(
         name = request.name,
         email = request.email,
@@ -55,6 +61,9 @@ def verify(code: str, db: Session):
     if not code_obj or not code_obj.usable:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid code")
     
+    if code_obj.created_at + timedelta(minutes=30) < datetime.now():
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Code expired")
+
     user = db.query(User).filter_by(id=code_obj.user_id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")

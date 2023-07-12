@@ -6,7 +6,6 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, P
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Index
 from secrets import token_urlsafe
-import random
 
 class User(Base):
     __tablename__ = 'users'

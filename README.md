@@ -9,9 +9,10 @@ User can:
 
 # How to run
 1. Clone this repo
-2. Modify the `docker-compose.yml` file to change environment variables (optional). Setting a docker volume for the database is recommended.
-3. Run `docker-compose up --build` with optional `-d` flag to run in background
-4. Go to `localhost:8000/docs` to see the Swagger documentation
+2. Modify the `docker-compose.yml` file to change environment variables (specially `HUNTER_API_KEY` for [hunter.io](https://hunter.io) should be added). 
+3. Setting a docker volume for the database is recommended.
+4. Run `docker-compose up --build` with optional `-d` flag to run in background
+5. Go to `localhost:8000/docs` to see the Swagger documentation
 
 # Workflow
 1. User registers an account on `/register` endpoint
