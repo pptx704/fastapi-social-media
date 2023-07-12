@@ -15,8 +15,9 @@ def register(request: schemas.RegistrationRequest, db: Session) -> schemas.BaseR
     if request.password != request.confirm_password:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Passwords do not match")
     
-    if not verify_email(request.email):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="We cannot accept this email address")
+    verify, message = verify_email(request.email)
+    if not verify:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=message)
 
     user = User(
         name = request.name,
