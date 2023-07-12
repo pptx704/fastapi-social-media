@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+    backend:
+        image: fastapi
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
+        environment:
+            - JWT_SECRET=fb89174cce0281e275407cb7d948e858
+            - JWT_ALGORITHM=HS256
+            - JWT_EXPIRE_MINUTES=240
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+            - WAIT_HOSTS=db:5432
+        depends_on:
+            - db
+    db:
+        image: postgres:15.3
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres
