@@ -41,3 +41,4 @@ ujson==5.8.0
 uvicorn==0.22.0
 watchfiles==0.19.0
 websockets==11.0.3
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
