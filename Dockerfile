@@ -1,4 +1,4 @@
-FROM python:3.14.0a3-slim
+FROM python:3.14.2-slim
 
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
