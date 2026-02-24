@@ -8,7 +8,7 @@ colorama
 cryptography
 dnspython
 ecdsa
-email-validato
+email-validator
 exceptiongroup
 fastapi
 greenlet
